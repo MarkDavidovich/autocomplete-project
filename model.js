@@ -32,6 +32,18 @@ class AutoCompleteTrie {
     }
     return currentNode.endOfWord;
   }
+
+  predictWords(prefix) {}
+
+  _getRemainingTree(prefix, node = this) {
+    let currentNode = node;
+    for (let char of prefix) {
+      if (currentNode.children[char]) {
+        currentNode = currentNode.children[char];
+      }
+    }
+    return currentNode;
+  }
 }
 
 //! don't forget to toLowerCase();
