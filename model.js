@@ -2,7 +2,7 @@ class AutoCompleteTrie {
   constructor(value) {
     this.value = value;
     this.children = {};
-    this.endOfWord;
+    this.endOfWord = false;
   }
 
   addWord(word) {
@@ -18,10 +18,27 @@ class AutoCompleteTrie {
     currentNode.endOfWord = true;
     ("finished, endOfWord is", currentNode.endOfWord);
   }
+
+  findWord(word) {
+    let currentNode = this;
+
+    for (let char of word) {
+      if (currentNode.children[char]) {
+        currentNode = currentNode.children[char];
+        console.log(currentNode.value);
+      } else {
+        return false;
+      }
+    }
+    return currentNode.endOfWord;
+  }
 }
 
-//value of root node is " "
+//! don't forget to toLowerCase();
 let trie = new AutoCompleteTrie(" ");
 
 trie.addWord("run");
 trie.addWord("running");
+
+console.log(trie.findWord("run"));
+console.log(trie.findWord("ru"));
