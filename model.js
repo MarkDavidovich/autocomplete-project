@@ -44,6 +44,18 @@ class AutoCompleteTrie {
     }
     return currentNode;
   }
+
+  _allWordsHelper(prefix, node, allWords) {
+    if (node.endOfWOrd) {
+      allWords.push(prefix);
+    }
+
+    for (let char in node.children) {
+      let childNode = node.children[char];
+
+      this._allWordsHelper(prefix + char, childNode, allWords);
+    }
+  }
 }
 
 //! don't forget to toLowerCase();
