@@ -33,20 +33,31 @@ class AutoCompleteTrie {
     return currentNode.endOfWord;
   }
 
-  predictWords(prefix) {}
+  predictWords(prefix) {
+    const node = this._getRemainingTree(prefix);
+    const allWords = [];
+
+    if (!node) {
+      return [];
+    }
+
+    this._allWordsHelper(prefix, node, allWords);
+    return allWords;
+  }
 
   _getRemainingTree(prefix, node = this) {
     let currentNode = node;
     for (let char of prefix) {
-      if (currentNode.children[char]) {
-        currentNode = currentNode.children[char];
+      if (!currentNode.children[char]) {
+        return null;
       }
+      currentNode = currentNode.children[char];
     }
     return currentNode;
   }
 
   _allWordsHelper(prefix, node, allWords) {
-    if (node.endOfWOrd) {
+    if (node.endOfWord) {
       allWords.push(prefix);
     }
 
@@ -63,6 +74,10 @@ let trie = new AutoCompleteTrie(" ");
 
 trie.addWord("run");
 trie.addWord("running");
+trie.addWord("runner");
+trie.addWord("runt");
 
 console.log(trie.findWord("run"));
 console.log(trie.findWord("ru"));
+
+console.log(trie.predictWords("run"));
