@@ -7,16 +7,21 @@ class AutoCompleteTrie {
 
   addWord(word) {
     let currentNode = this;
+    let isNew = false;
 
     for (let char of word) {
       if (!currentNode.children[char]) {
         currentNode.children[char] = new AutoCompleteTrie(char);
-        console.log("Created a new node!", char);
+        isNew = true;
       }
       currentNode = currentNode.children[char];
     }
-    currentNode.endOfWord = true;
-    ("finished, endOfWord is", currentNode.endOfWord);
+    if (!currentNode.endOfWord) {
+      currentNode.endOfWord = true;
+      isNew = true;
+    }
+
+    return isNew;
   }
 
   findWord(word) {
@@ -34,15 +39,20 @@ class AutoCompleteTrie {
   }
 
   predictWords(prefix) {
-    const node = this._getRemainingTree(prefix);
-    const allWords = [];
+    try {
+      const node = this._getRemainingTree(prefix);
+      const allWords = [];
 
-    if (!node) {
+      if (!node) {
+        return [];
+      }
+
+      this._allWordsHelper(prefix, node, allWords);
+      return allWords;
+    } catch (err) {
+      console.error(`Error in predictWords: ${err.message}`);
       return [];
     }
-
-    this._allWordsHelper(prefix, node, allWords);
-    return allWords;
   }
 
   _getRemainingTree(prefix, node = this) {
@@ -57,28 +67,20 @@ class AutoCompleteTrie {
   }
 
   _allWordsHelper(prefix, node, allWords) {
-    if (node.endOfWord) {
-      allWords.push(prefix);
-    }
+    try {
+      if (node.endOfWord) {
+        allWords.push(prefix);
+      }
 
-    for (let char in node.children) {
-      let childNode = node.children[char];
+      for (let char in node.children) {
+        let childNode = node.children[char];
 
-      this._allWordsHelper(prefix + char, childNode, allWords);
+        this._allWordsHelper(prefix + char, childNode, allWords);
+      }
+    } catch (err) {
+      console.error(`Error in _allWordsHelper: ${err.message}`);
     }
   }
 }
 
 module.exports = AutoCompleteTrie;
-
-// let trie = new AutoCompleteTrie(" ");
-
-// trie.addWord("run");
-// trie.addWord("running");
-// trie.addWord("runner");
-// trie.addWord("runt");
-
-// console.log(trie.findWord("run"));
-// console.log(trie.findWord("ru"));
-
-// console.log(trie.predictWords("run"));
