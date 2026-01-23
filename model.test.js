@@ -74,8 +74,6 @@ describe("AutoCompleteTrie", () => {
 
     test("should handle exact matches as part of predictions", () => {
       const predictions = trie.predictWords("cat");
-      // valid predictions from 'cat' are 'cat' itself (since it's a valid word)
-      // and any extensions.
       expect(predictions).toEqual(expect.arrayContaining(["cat"]));
     });
 
