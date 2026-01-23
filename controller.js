@@ -1,5 +1,5 @@
-const { printHelp, actionsMenu, printMessage, printStartMessage, printExitMessage } = module.require("./view");
-const AutoCompleteTrie = module.require("./model");
+const { printHelp, actionsMenu, printMessage, printStartMessage, printExitMessage } = module.require("./view/view");
+const AutoCompleteTrie = module.require("./model/model");
 
 const trie = new AutoCompleteTrie(" ");
 
