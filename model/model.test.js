@@ -1,4 +1,4 @@
-const AutoCompleteTrie = module.require("/model");
+const AutoCompleteTrie = module.require("./model");
 
 describe("AutoCompleteTrie", () => {
   let trie;
