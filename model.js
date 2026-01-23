@@ -30,7 +30,6 @@ class AutoCompleteTrie {
     for (let char of word) {
       if (currentNode.children[char]) {
         currentNode = currentNode.children[char];
-        console.log(currentNode.value);
       } else {
         return false;
       }
