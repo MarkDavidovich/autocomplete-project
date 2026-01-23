@@ -54,7 +54,7 @@ const printMessage = (success, info) => {
   console.log(success ? `✓ ${info}\n` : `✗  ${info}\n`);
 };
 
-const validateWord = (word) => /^[a-zA-Z]+$/.test(word).trim(word);
+const validateWord = (word) => /^[a-zA-Z]+$/.test(word);
 
 const checkInput = (word) => {
   if (!word) return null;
