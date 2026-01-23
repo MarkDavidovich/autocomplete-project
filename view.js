@@ -13,39 +13,43 @@ const printHelp = () => {
 };
 
 const actionsMenu = () => {
+  const input = prompt().trim().toLowerCase();
+  const [action, word] = input.split(" ");
+
+  if (action === "exit") {
+    return { action: "exit" };
+  }
+
+  if (!checkInput(action)) {
+    printMessage(false, `${action} action is invalid!`);
+    return null;
+  }
+
+  switch (action) {
+    case "add":
+    case "find":
+    case "complete":
+      const cleanWord = checkInput(word);
+      if (cleanWord) return { action, word: cleanWord };
+      break;
+
+    case "help":
+      printHelp();
+      return null;
+
+    default:
+      printMessage(false, `${action} is not a command!`);
+      return null;
+  }
+};
+
+const printStartMessage = () => {
   console.log(`=== AutoComplete Trie Console ===
           Type 'help' for commands`);
+};
 
-  while (true) {
-    const input = prompt().trim().toLowerCase();
-    const [action, word] = input.split(" ");
-
-    if (action === "exit") {
-      return;
-    }
-
-    if (!validateWord(action)) {
-      printMessage(false, `${action} action is invalid!`);
-      continue;
-    }
-
-    switch (action) {
-      case "add":
-      case "find":
-      case "complete":
-        const cleanWord = checkInput(word);
-        if (cleanWord) return { action, word: cleanWord };
-        break;
-
-      case "help":
-        printHelp();
-        break;
-
-      default:
-        printMessage(false, `${action} is not a command!`);
-        break;
-    }
-  }
+const printExitMessage = () => {
+  console.log(`Goodbye!`);
 };
 
 const printMessage = (success, info) => {
@@ -65,6 +69,6 @@ const checkInput = (word) => {
   return word;
 };
 
-module.exports = { printHelp, actionsMenu, printMessage };
+module.exports = { printHelp, actionsMenu, printMessage, printStartMessage, printExitMessage };
 
 //TODO: CHECK FLOW, need to understand further about complete actions.
