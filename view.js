@@ -32,11 +32,9 @@ const actionsMenu = () => {
       const cleanWord = checkInput(word);
       if (cleanWord) return { action, word: cleanWord };
       break;
-
     case "help":
       printHelp();
       return null;
-
     default:
       printMessage(false, `${action} is not a command!`);
       return null;
@@ -56,7 +54,7 @@ const printMessage = (success, info) => {
   console.log(success ? `✓ ${info}\n` : `✗  ${info}\n`);
 };
 
-const validateWord = (word) => /^[a-zA-Z]+$/.test(word);
+const validateWord = (word) => /^[a-zA-Z]+$/.test(word).trim(word);
 
 const checkInput = (word) => {
   if (!word) return null;
@@ -70,5 +68,3 @@ const checkInput = (word) => {
 };
 
 module.exports = { printHelp, actionsMenu, printMessage, printStartMessage, printExitMessage };
-
-//TODO: CHECK FLOW, need to understand further about complete actions.
