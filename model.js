@@ -69,15 +69,16 @@ class AutoCompleteTrie {
   }
 }
 
-//! don't forget to toLowerCase();
-let trie = new AutoCompleteTrie(" ");
+module.exports = AutoCompleteTrie;
 
-trie.addWord("run");
-trie.addWord("running");
-trie.addWord("runner");
-trie.addWord("runt");
+// let trie = new AutoCompleteTrie(" ");
 
-console.log(trie.findWord("run"));
-console.log(trie.findWord("ru"));
+// trie.addWord("run");
+// trie.addWord("running");
+// trie.addWord("runner");
+// trie.addWord("runt");
 
-console.log(trie.predictWords("run"));
+// console.log(trie.findWord("run"));
+// console.log(trie.findWord("ru"));
+
+// console.log(trie.predictWords("run"));
